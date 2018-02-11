@@ -5,7 +5,13 @@ const url = require('url')
 let win;
 
 const createWindow = () => {
-    win = new BrowserWindow({ width: 800, height: 600 });
+    win = new BrowserWindow({
+        width: 600,
+        height: 300,
+        minWidth: 500,
+        minHeight: 200,
+        acceptFirstMouse: true
+    });
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file',
