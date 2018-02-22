@@ -57,15 +57,19 @@ try {
 }
 
 // Parse 变电站数据
+
 // Parse 强电间数据
 const distributionPanelFiles = fs.readdirSync(path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME)).map(filename => path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME, filename));
-const distributionPanelSheets = fp.flow(
+const distributionPanelObjs = fp.flow(
     fp.map(file => xlsx.parse(file)),
-    fp.flatten,
+    _.flatten,
     fp.map(sheetObj => sheetObj.data),
-    fp.map(sheet=>sheet.map(row=>_.compact(row))),
-    fp.map(sheet=>_.reject(sheet,_.isEmpty))
-)(distributionPanelFiles)
+    fp.map(sheet => sheet.map(row => _.compact(row))),
+    fp.map(sheet => _.reject(sheet, _.isEmpty)),
+    fp.map(sheet => _.take(sheet, 4)),
+    fp.map(sheet => ({ name: sheet[0][0], position: sheet[1][1] || null, parent: sheet[2][1] || null, breaker: sheet[3][1] || null }))
+)(distributionPanelFiles);
+// TODO: regulate panel name
 
-console.log(JSON.stringify(distributionPanelSheets));
+console.log(JSON.stringify(distributionPanelObjs));
 process.exit();
