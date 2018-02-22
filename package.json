@@ -1,16 +1,30 @@
 {
   "name": "distribution_management",
   "version": "0.1.0",
-  "description": "",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx electron ."
   },
   "keywords": [],
-  "author": "",
+  "author": "raawaa",
   "license": "ISC",
   "devDependencies": {
     "electron": "^1.8.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raawaa/distribution_management.git"
+  },
+  "bugs": {
+    "url": "https://github.com/raawaa/distribution_management/issues"
+  },
+  "homepage": "https://github.com/raawaa/distribution_management#readme",
+  "description": "",
+  "dependencies": {
+    "knex": "^0.14.4",
+    "mkdirp": "^0.5.1",
+    "node-xlsx": "^0.11.2",
+    "sqlite3": "^3.1.13"
   }
 }
