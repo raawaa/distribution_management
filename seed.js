@@ -64,9 +64,9 @@ const distributionPanelObjs = fp.flow(
     fp.map(file => xlsx.parse(file)),
     _.flatten,
     fp.map(sheetObj => sheetObj.data),
-    fp.map(sheet => sheet.map(row => _.compact(row))),
-    fp.map(sheet => _.reject(sheet, _.isEmpty)),
-    fp.map(sheet => _.take(sheet, 4)),
+    fp.map(sheet => sheet.map(row => _.compact(row))),  // rm empty cells
+    fp.map(sheet => _.reject(sheet, _.isEmpty)),        // rm empty rows
+    fp.map(sheet => _.take(sheet, 4)),                  // take rows containing panel info only
     fp.map(sheet => ({ name: sheet[0][0], position: sheet[1][1] || null, parent: sheet[2][1] || null, breaker: sheet[3][1] || null }))
 )(distributionPanelFiles);
 // TODO: regulate panel name
