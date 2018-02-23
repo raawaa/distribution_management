@@ -52,13 +52,30 @@ catch (err) {
 // Parse 变电站数据
 
 const stationFiles = fs.readdirSync(path.join(__dirname, DATA_SOURCE_DIRNAME, STATION_DIRNAME)).map(file => path.join(__dirname, DATA_SOURCE_DIRNAME, STATION_DIRNAME, file));
-const stationDeviceObjs = fp.flow(
+const stationDeviceSheetObjs = fp.flow(
     fp.map(file => xlsx.parse(file)),
     fp.flatten,                             // to array of sheets
-    fp.slice(0)(2),
-    JSON.stringify,
-    console.log
+    fp.slice(0)(2)
+    // JSON.stringify,
+    // console.log
 )(stationFiles);
+
+const stationDeviceObjs = fp.map(sheetObj => {
+    if (sheetObj.name == "一号站") { console.log(sheetObj.name, sheetObj.data); return fp.map(parseRow1)(sheetObj.data); }
+})(stationDeviceSheetObjs);
+
+console.log(stationDeviceObjs);
+// parse station #1 rows
+function parseRow1(row) {
+    let compactRow = _.tail(row);
+    return {
+        name: '1-' + compactRow[0] || null,
+        original_name: compactRow[1],
+        tag_name: compactRow[3],
+        position: '1#变电站'
+    }
+}
+
 
 // Parse 强电间数据
 const distributionPanelFiles = fs.readdirSync(path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME)).map(filename => path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME, filename));
