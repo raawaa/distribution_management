@@ -24,16 +24,9 @@ const knex = require('knex')({
     }
 });
 
+mkdirp.sync(path.join(__dirname, DATA_SOURCE_DIRNAME, STATION_DIRNAME));
 
-mkdirp(path.join(__dirname, DATA_SOURCE_DIRNAME, STATION_DIRNAME), function mkDataSourceDirStation(err, made) {
-    if (err) console.error(`Error when creating data source dir (station).`);
-    else console.log(`Data source dir(station) created!`);
-});
-
-mkdirp(path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME), function mkDataSourceDirDistribution(err, made) {
-    if (err) console.error(`Error when creating data source dir (distribution).`);
-    else console.log(`Data source dir(distribution) created!`);
-});
+mkdirp.sync(path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME));
 
 try { fs.accessSync(path.join(__dirname, DB_DIRNAME)) }
 catch (err) {
