@@ -51,6 +51,15 @@ catch (err) {
 
 // Parse 变电站数据
 
+const stationFiles = fs.readdirSync(path.join(__dirname, DATA_SOURCE_DIRNAME, STATION_DIRNAME)).map(file => path.join(__dirname, DATA_SOURCE_DIRNAME, STATION_DIRNAME, file));
+const stationDeviceObjs = fp.flow(
+    fp.map(file => xlsx.parse(file)),
+    fp.flatten,                             // to array of sheets
+    fp.slice(0)(2),
+    JSON.stringify,
+    console.log
+)(stationFiles);
+
 // Parse 强电间数据
 const distributionPanelFiles = fs.readdirSync(path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME)).map(filename => path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME, filename));
 const distributionPanelObjs = fp.flow(
