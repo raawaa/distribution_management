@@ -17,8 +17,17 @@ const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 // const sqlite3 =require('sqlite3').verbose;
+// 删除现有测试数据库
+try {
+    fs.unlinkSync(path.join(__dirname, DB_DIRNAME, TEST_DB_NAME));
+} catch (error) {
+    if (error.code !== 'ENOENT') {
+        console.error(`Error when delete existed test db: `, error);
+        process.exit(1);
+    }
+}
 const knex = require('knex')({
-    dialect: 'sqlite3',
+    client: 'sqlite3',
     connection: {
         filename: path.join(__dirname, DB_DIRNAME, TEST_DB_NAME)
     }
@@ -39,15 +48,6 @@ catch (err) {
     });
 }
 
-// 删除现有测试数据库
-try {
-    fs.unlinkSync(path.join(__dirname, DB_DIRNAME, TEST_DB_NAME));
-} catch (error) {
-    if (error.code !== 'ENOENT') {
-        console.error(`Error when delete existed test db: `, error);
-        process.exit(1);
-    }
-}
 
 // Parse 变电站数据
 
@@ -61,9 +61,21 @@ const distributionPanelObjs = fp.flow(
     fp.map(sheet => sheet.map(row => _.compact(row))),  // rm empty cells
     fp.map(sheet => _.reject(sheet, _.isEmpty)),        // rm empty rows
     fp.map(sheet => _.take(sheet, 4)),                  // take rows containing panel info only
-    fp.map(sheet => ({ name: sheet[0][0] || null, position: sheet[1][1] || null, parent: sheet[2][1] || null, breaker: sheet[3][1] || null }))
+    fp.map(sheet => ({ name: sheet[0][0] || null, position: sheet[1][1] || null, breaker: sheet[3][1] || null }))
 )(distributionPanelFiles);
 // TODO: regulate panel name
 
-console.log(JSON.stringify(distributionPanelObjs));
-process.exit();
+knex.schema.hasTable('distribution_panels')
+    .then(function (exists) {
+        if (!exists) {
+            return knex.schema.createTable('distribution_panels', function (table) {
+                table.increments();
+                table.string('name');
+                table.string('breaker');
+                table.string('position');
+            });
+        }
+    })
+    .then(() => knex('distribution_panels').insert(distributionPanelObjs))
+    .then(res => console.log(res));
+
