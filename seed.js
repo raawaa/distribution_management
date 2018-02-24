@@ -55,16 +55,21 @@ const stationFiles = fs.readdirSync(path.join(__dirname, DATA_SOURCE_DIRNAME, ST
 const stationDeviceSheetObjs = fp.flow(
     fp.map(file => xlsx.parse(file)),
     fp.flatten,                             // to array of sheets
-    fp.slice(0)(2)
+    // fp.slice(0)(2)
     // JSON.stringify,
     // console.log
 )(stationFiles);
 
-const stationDeviceObjs = fp.map(sheetObj => {
-    if (sheetObj.name == "一号站") { console.log(sheetObj.name, sheetObj.data); return fp.map(parseRow1)(sheetObj.data); }
-})(stationDeviceSheetObjs);
+const stationDeviceObjs = fp.flow(
+    fp.map(sheetObj => {
+        if (sheetObj.name == "一号站") return fp.flow(fp.tail, fp.map(parseRow1))(sheetObj.data);
+        else if (sheetObj.name == '二号站') return fp.flow(fp.tail, fp.map(parseRow2))(sheetObj.data);
+        else return null;
+    }),
+    fp.compact,
+    fp.flatten)(stationDeviceSheetObjs);
 
-console.log(stationDeviceObjs);
+// console.log(stationDeviceObjs);
 // parse station #1 rows
 function parseRow1(row) {
     let compactRow = _.tail(row);
@@ -73,6 +78,18 @@ function parseRow1(row) {
         original_name: compactRow[1],
         tag_name: compactRow[3],
         position: '1#变电站'
+    }
+}
+
+function parseRow2(row) {
+    return {
+        name: '2-' + row[2],
+        original_name: row[3],
+        tag_name: row[4],
+        breaker_type: row[6],
+        rated_current: row[7],
+        ct_ratio: row[8],
+        position: '2#变电站'
     }
 }
 
