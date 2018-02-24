@@ -123,7 +123,7 @@ edge obj:
     end: panel name
 } */
 
-const edges = fp.flow(
+const edgeObjs = fp.flow(
     fp.map(x => ({ start: _.split(x.parents, /\s+/), end: x.name, isBackup: null })),
     fp.map(edge => {
         let res = [];
@@ -170,25 +170,58 @@ knex.schema.hasTable('distribution_panels')
         breaker: x.breaker,
         position: x.position
     }))))
-    .then(res => console.log(res));
+    .then(
+        () => {
 
-knex.schema.hasTable('device_node')
-    .then(exists => {
-        if (!exists) {
-            return knex.schema.createTable('device_node', table => {
-                table.increments();
-                table.string('name'),
-                    table.string('original_name'),
-                    table.string('tag_name'),
-                    table.string('breaker_type'),
-                    table.string('rated_current'),
-                    table.string('ct_ratio'),
-                    table.string('position')
-            })
+            knex.schema.hasTable('device_node')
+                .then(exists => {
+                    if (!exists) {
+                        return knex.schema.createTable('device_node', table => {
+                            table.increments();
+                            table.string('name'),
+                                table.string('original_name'),
+                                table.string('tag_name'),
+                                table.string('breaker_type'),
+                                table.string('rated_current'),
+                                table.string('ct_ratio'),
+                                table.string('position')
+                        })
+                    }
+                }).then(() => {
+                    console.debug('table created: device_node');
+                    // let inserting = knex('device_node').insert(stationDeviceObjs);
+                    return knex.batchInsert('device_node', stationDeviceObjs, 100);
+                })
+                .then(
+                    () => {
+                        // find edges
+                        let edgeRows = [];
+
+                        _.forEach(edgeObjs, function (e) {
+                            let startNodeId = null;
+                            let endNodeId = null;
+                            // get start node id
+                            knex('device_node').where({ name: e.start }).select('id')
+                                .then(function (res) {
+                                    startNodeId = res[0]['id'];
+                                    knex('distribution_panels').where({ name: e.end }).select('id')
+                                        .then(function (res) {
+                                            endNodeId = res[0]['id'];
+                                            edgeRows.push({ startNodeId, endNodeId });
+                                            console.debug('edgeRows: ',edgeRows);
+                                        });
+                                });
+                        });
+
+                    }
+
+
+                );
         }
-    }).then(() => {
-        console.debug('table created: device_node');
-        // let inserting = knex('device_node').insert(stationDeviceObjs);
-        return knex.batchInsert('device_node', stationDeviceObjs, 100);
-    })
-    .then(res => console.log('insert station devs: ', res));
+
+    );
+
+
+
+
+
