@@ -30,7 +30,8 @@ const knex = require('knex')({
     client: 'sqlite3',
     connection: {
         filename: path.join(__dirname, DB_DIRNAME, TEST_DB_NAME)
-    }
+    },
+    useNullAsDefault: true
 });
 
 mkdirp.sync(path.join(__dirname, DATA_SOURCE_DIRNAME, STATION_DIRNAME));
@@ -69,26 +70,24 @@ const stationDeviceObjs = fp.flow(
     fp.compact,
     fp.flatten)(stationDeviceSheetObjs);
 
-// console.log(stationDeviceObjs);
-// parse station #1 rows
 function parseRow1(row) {
     let compactRow = _.tail(row);
     return {
         name: '1-' + compactRow[0] || null,
-        original_name: compactRow[1],
-        tag_name: compactRow[3],
+        original_name: compactRow[1] || null,
+        tag_name: compactRow[3] || null,
         position: '1#变电站'
     }
 }
 
 function parseRow2(row) {
     return {
-        name: '2-' + row[2],
-        original_name: row[3],
-        tag_name: row[4],
-        breaker_type: row[6],
-        rated_current: row[7],
-        ct_ratio: row[8],
+        name: '2-' + row[2] || null,
+        original_name: row[3] || null,
+        tag_name: row[4] || null,
+        breaker_type: row[6] || null,
+        rated_current: row[7] || null,
+        ct_ratio: row[8] || null,
         position: '2#变电站'
     }
 }
@@ -104,10 +103,57 @@ const distributionPanelObjs = fp.flow(
     fp.map(sheet => sheet.map(row => _.compact(row))),  // rm empty cells
     fp.map(sheet => _.reject(sheet, _.isEmpty)),        // rm empty rows
     fp.map(sheet => _.take(sheet, 4)),                  // take rows containing panel info only
-    fp.map(sheet => ({ name: sheet[0][0] || null, position: sheet[1][1] || null, breaker: sheet[3][1] || null }))
+    fp.map(sheet => {
+        console.debug(sheet);
+        return {
+            name: sheet[0][0] || null,
+            position: sheet[1][1] || null,
+            breaker: sheet[3][1] || null,
+            parents: sheet[2][1] || null
+        }
+    })
 )(distributionPanelFiles);
 // TODO: regulate panel name
 
+
+/* parse edges
+edge obj:
+{
+    start: device node name,
+    end: panel name
+} */
+
+const edges = fp.flow(
+    fp.map(x => ({ start: _.split(x.parents, /\s+/), end: x.name, isBackup: null })),
+    fp.map(edge => {
+        let res = [];
+        _.forEach(edge.start, s => {
+            res.push({ start: s, end: edge.end })
+        });
+        return res;
+    }),
+    fp.flatten,
+    fp.map(e => {
+        e.start = _.replace(e.start, '#站', '-');
+        if (_.includes(e.start, '备')) {
+            return {
+                start: _.replace(e.start, /[\(（]备[）)]/, ''),
+                end: e.end,
+                isBackup: true
+            }
+        }
+        else if (_.includes(e.start, '主')) {
+            return {
+                start: _.replace(e.start, /[\(（]主[）)]/, ''),
+                end: e.end,
+                isBackup: false
+            }
+        } else return e;
+    })
+)(distributionPanelObjs);
+
+
+// seeding database
 knex.schema.hasTable('distribution_panels')
     .then(function (exists) {
         if (!exists) {
@@ -119,6 +165,30 @@ knex.schema.hasTable('distribution_panels')
             });
         }
     })
-    .then(() => knex('distribution_panels').insert(distributionPanelObjs))
+    .then(() => knex('distribution_panels').insert(distributionPanelObjs.map(x => ({
+        name: x.name,
+        breaker: x.breaker,
+        position: x.position
+    }))))
     .then(res => console.log(res));
 
+knex.schema.hasTable('device_node')
+    .then(exists => {
+        if (!exists) {
+            return knex.schema.createTable('device_node', table => {
+                table.increments();
+                table.string('name'),
+                    table.string('original_name'),
+                    table.string('tag_name'),
+                    table.string('breaker_type'),
+                    table.string('rated_current'),
+                    table.string('ct_ratio'),
+                    table.string('position')
+            })
+        }
+    }).then(() => {
+        console.debug('table created: device_node');
+        // let inserting = knex('device_node').insert(stationDeviceObjs);
+        return knex.batchInsert('device_node', stationDeviceObjs, 100);
+    })
+    .then(res => console.log('insert station devs: ', res));
