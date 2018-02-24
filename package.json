@@ -22,6 +22,7 @@
   "homepage": "https://github.com/raawaa/distribution_management#readme",
   "description": "",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "knex": "^0.14.4",
     "lodash": "^4.17.5",
     "mkdirp": "^0.5.1",

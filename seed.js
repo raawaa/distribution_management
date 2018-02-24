@@ -10,6 +10,7 @@ const DATA_SOURCE_DIRNAME = "data_source";
 const STATION_DIRNAME = "station";
 const DISTRIBUTION_ROOM_DIRNAME = "distribution_room";
 
+const Promise = require('bluebird');
 const _ = require('lodash');
 const fp = require('lodash/fp');
 const xlsx = require('node-xlsx');
@@ -17,6 +18,7 @@ const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 // const sqlite3 =require('sqlite3').verbose;
+
 // 删除现有测试数据库
 try {
     fs.unlinkSync(path.join(__dirname, DB_DIRNAME, TEST_DB_NAME));
@@ -26,6 +28,7 @@ try {
         process.exit(1);
     }
 }
+
 const knex = require('knex')({
     client: 'sqlite3',
     connection: {
@@ -104,11 +107,11 @@ const distributionPanelObjs = fp.flow(
     fp.map(sheet => _.reject(sheet, _.isEmpty)),        // rm empty rows
     fp.map(sheet => _.take(sheet, 4)),                  // take rows containing panel info only
     fp.map(sheet => {
-        console.debug(sheet);
+        // console.debug(sheet);
         return {
             name: sheet[0][0] || null,
             position: sheet[1][1] || null,
-            breaker: sheet[3][1] || null,
+            breaker_type: sheet[3][1] || null,
             parents: sheet[2][1] || null
         }
     })
@@ -153,75 +156,89 @@ const edgeObjs = fp.flow(
 )(distributionPanelObjs);
 
 
-// seeding database
-knex.schema.hasTable('distribution_panels')
-    .then(function (exists) {
+// // seeding database
+// knex.schema.hasTable('distribution_panels')
+//     .then(function (exists) {
+//         if (!exists) {
+//             return knex.schema.createTable('distribution_panels', function (table) {
+//                 table.increments();
+//                 table.string('name');
+//                 table.string('breaker');
+//                 table.string('position');
+//             });
+//         }
+//     })
+//     .then(() => knex('distribution_panels').insert(distributionPanelObjs.map(x => ({
+//         name: x.name,
+//         breaker: x.breaker,
+//         position: x.position
+//     }))))
+//     .then(
+//         () => {
+//         }
+
+//     );
+
+
+knex.schema.hasTable('device_node')
+    .then(exists => {
         if (!exists) {
-            return knex.schema.createTable('distribution_panels', function (table) {
+            return knex.schema.createTable('device_node', table => {
                 table.increments();
                 table.string('name');
-                table.string('breaker');
+                table.string('original_name');
+                table.string('tag_name');
+                table.string('breaker_type');
+                table.string('rated_current');
+                table.string('ct_ratio');
                 table.string('position');
             });
         }
     })
-    .then(() => knex('distribution_panels').insert(distributionPanelObjs.map(x => ({
-        name: x.name,
-        breaker: x.breaker,
-        position: x.position
-    }))))
-    .then(
-        () => {
-
-            knex.schema.hasTable('device_node')
-                .then(exists => {
-                    if (!exists) {
-                        return knex.schema.createTable('device_node', table => {
-                            table.increments();
-                            table.string('name'),
-                                table.string('original_name'),
-                                table.string('tag_name'),
-                                table.string('breaker_type'),
-                                table.string('rated_current'),
-                                table.string('ct_ratio'),
-                                table.string('position')
-                        })
-                    }
-                }).then(() => {
-                    console.debug('table created: device_node');
-                    // let inserting = knex('device_node').insert(stationDeviceObjs);
-                    return knex.batchInsert('device_node', stationDeviceObjs, 100);
-                })
-                .then(
-                    () => {
-                        // find edges
-                        let edgeRows = [];
-
-                        _.forEach(edgeObjs, function (e) {
-                            let startNodeId = null;
-                            let endNodeId = null;
-                            // get start node id
-                            knex('device_node').where({ name: e.start }).select('id')
-                                .then(function (res) {
-                                    startNodeId = res[0]['id'];
-                                    knex('distribution_panels').where({ name: e.end }).select('id')
-                                        .then(function (res) {
-                                            endNodeId = res[0]['id'];
-                                            edgeRows.push({ startNodeId, endNodeId });
-                                            console.debug('edgeRows: ',edgeRows);
-                                        });
-                                });
+    .then(() => {
+        // console.debug('table created: device_node');
+        // let inserting = knex('device_node').insert(stationDeviceObjs);
+        return knex.batchInsert('device_node', stationDeviceObjs, 100);
+    })
+    .then(() => {
+        return knex.batchInsert('device_node', _.map(distributionPanelObjs, x => ({
+            name: x.name,
+            tag_name: x.name,
+            breaker_type: x.breaker_type,
+            position: x.position
+        })), 100);
+    })
+    .then(() => {
+        Promise.map(edgeObjs, function (e) {
+            return knex('device_node').where({ name: e.start }).select('id')
+                .then(function (startIds) {
+                    return knex('device_node').where({ name: e.end }).select('id')
+                        .then(function (endIds) {
+                            if (_.isEmpty(startIds) || _.isEmpty(endIds))
+                                return null;
+                            else
+                                return {
+                                    start: startIds[0]['id'],
+                                    end: endIds[0]['id'],
+                                    is_backup: e.isBackup
+                                }
                         });
+                });
+        }).then(function (res) {
+            return knex.schema.hasTable('edges')
+                .then(function (has) {
+                    if (!has)
+                        return knex.schema.createTable('edges', function (t) {
+                            t.increments();
+                            t.string('start');
+                            t.string('end');
+                            t.boolean('is_backup');
+                        }).then(function () {
+                            return knex('edges').select();
+                            return knex.batchInsert('edges', _.compact(res), 100).catch(e => console.error(e));
+                            return knex.insert(res).into('edges').then();
 
-                    }
-
-
-                );
-        }
-
-    );
-
-
-
-
-
+                        });
+                });
+        });
+    });
