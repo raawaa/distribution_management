@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="css/photon.min.css">
 
     <!-- Javascript -->
-    <script src="menu.js" charset="utf-8"></script>
+    <script src="../dist/menu.bundle.js" charset="utf-8"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
   </head>
   <body>
     <div class="window">
@@ -55,7 +56,8 @@
           </div>
 
           <div class="pane">
-            <table class="table-striped">
+            <span id='app'>{{message}}</span>
+            <!-- <table class="table-striped">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -174,10 +176,11 @@
                   <td>connors</td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
           </div>
         </div>
       </div>
     </div>
+    <script src="../dist/index.bundle.js"></script>
   </body>
 </html>
