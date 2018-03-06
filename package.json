@@ -4,15 +4,15 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx electron .",
-    "build": "webpack"
+    "start": "electron .",
+    "build": "webpack",
+    "rebuild": "electron-rebuild -d=http://npm.taobao.org/mirrors/atom-shell"
   },
   "keywords": [],
   "author": "raawaa",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^0.28.10",
-    "electron": "^1.8.2",
     "electron-rebuild": "^1.7.3",
     "style-loader": "^0.20.2",
     "webpack": "^4.0.1",
@@ -29,6 +29,7 @@
   "description": "",
   "dependencies": {
     "bluebird": "^3.5.1",
+    "electron": "1.6.5",
     "knex": "^0.14.4",
     "lodash": "^4.17.5",
     "mkdirp": "^0.5.1",
