@@ -62,7 +62,7 @@
             <li class="list-group-header">
               <input @input="fetchData" class="form-control" type="text" placeholder="输入查询关键字">
             </li>
-            <li v-for="res in searchResults" class="list-group-item">
+            <li @click="getItemDetail" v-for="res in searchResults" class="list-group-item" :data-deviceId="res.id" :data-deviceName="res.name">
               <!-- <img class="img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32"> -->
               <span class="icon icon-network img-circle meida-object pull-left"></span>
               <div class="media-body">

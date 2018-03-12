@@ -12,13 +12,23 @@ const app = new Vue({
   },
   methods: {
     fetchData: function (event) {
-      ipcRenderer.send('search',event.target.value)
+      ipcRenderer.send('search', event.target.value)
+    },
+    getItemDetail: function (event) {
+      event.preventDefault();
+      let title = event.currentTarget.dataset.devicename;
+      let detailWin = new remote.BrowserWindow({
+        title,
+        autoHideMenuBar: true
+      });
+
+      // alert('clicked');
     }
   }
 })
 
-ipcRenderer.on('search-result',(event,arg)=>{
-  app.searchResults=arg;
+ipcRenderer.on('search-result', (event, arg) => {
+  app.searchResults = arg;
 })
 
 // Build our new menu

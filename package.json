@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "build": "webpack",
+    "watch": "webpack --watch",
     "rebuild": "electron-rebuild -d=http://npm.taobao.org/mirrors/atom-shell"
   },
   "keywords": [],
