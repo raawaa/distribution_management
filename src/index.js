@@ -1,3 +1,4 @@
+const path = require('path')
 const { remote, ipcRenderer } = require('electron')
 const Menu = remote.Menu
 const MenuItem = remote.MenuItem
@@ -21,6 +22,7 @@ const app = new Vue({
         title,
         autoHideMenuBar: true
       });
+      detailWin.loadURL(`file://${__dirname}/detail.html`)
 
       // alert('clicked');
     }
