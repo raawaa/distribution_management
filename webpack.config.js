@@ -3,7 +3,8 @@ module.exports = {
     target: "electron-renderer",
     entry: {
         menu: "./src/menu.js",
-        index:'./src/index.js'
+        index:'./src/index.js',
+        detail:'./src/detail.js'
     },
     devtool:'source-map',
     output: {
