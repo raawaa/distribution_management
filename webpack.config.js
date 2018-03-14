@@ -6,7 +6,7 @@ module.exports = {
         index: './src/index.js',
         detail: './src/detail.js'
     },
-    devtool: 'source-map',
+    // devtool: 'source-map',
     node: {
         __dirname: false
     },
@@ -19,4 +19,5 @@ module.exports = {
             'vue$': 'vue/dist/vue.esm.js'
         }
     }
+
 };

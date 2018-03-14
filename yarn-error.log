@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js start
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
 
 PATH: 
-  C:\Program Files\ImageMagick-7.0.2-Q16;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files (x86)\QuickTime\QTSystem\;C:\texlive\2017\bin\win32;C:\ProgramData\chocolatey\bin;C:\cygwin64\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Users\YuWenjie\.windows-build-tools\python27\;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Users\YuWenjie\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\cygwin64\bin;C:\Users\YuWenjie\sqlite-tools-win32-x86-3220000;C:\Users\YuWenjie\AppData\Roaming\npm;C:\Users\YuWenjie\AppData\Local\Yarn\bin
+  C:\Users\YuWenjie\cmder_mini\bin;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5\ConEmu\Scripts;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5\ConEmu;C:\Program Files\ImageMagick-7.0.2-Q16;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files (x86)\QuickTime\QTSystem\;C:\texlive\2017\bin\win32;C:\ProgramData\chocolatey\bin;C:\cygwin64\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Users\YuWenjie\.windows-build-tools\python27\;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Users\YuWenjie\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\cygwin64\bin;C:\Users\YuWenjie\sqlite-tools-win32-x86-3220000;C:\Users\YuWenjie\AppData\Roaming\npm;C:\Users\YuWenjie\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Users\YuWenjie\cmder_mini\
 
 Yarn version: 
   1.5.1
@@ -6237,13 +6237,17 @@ Lockfile:
       yeoman-environment "^1.1.0"
 
 Trace: 
-  Error: Command failed.
+  Error: F:\Code\distribution_management\node_modules\electron: Command failed.
   Exit code: 1
   Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c electron .
-  Directory: F:\Code\distribution_management
+  Arguments: /d /s /c node install.js
+  Directory: F:\Code\distribution_management\node_modules\electron
   Output:
+  F:\Code\distribution_management\node_modules\electron\install.js:47
+    throw err
+    ^
   
+  Error: EPERM: operation not permitted, unlink 'C:\Users\YuWenjie\.electron\electron-v1.6.5-win32-x64.zip'
       at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
       at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
       at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)

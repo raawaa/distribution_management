@@ -5,13 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <title>Detail</title> -->
+    <title>{{deviceInfo.name}}</title>
 </head>
 
 <body>
+    <style>
+        #cy {
+            height: 800px
+        }
+    </style>
     <div id='detail'>
-        <h1> {{ title }} </h1>
-        <p>{{msg}}</p>
+        <h1> {{ deviceInfo.name }} </h1>
+        <pre>
+            内部数据库编号: {{deviceInfo.id || '无'}}
+            设备建设编号：{{deviceInfo.original_name || '无'}}
+            设备标签：{{deviceInfo.tag_name || '无'}}
+            断路器型号：{{deviceInfo.breaker_type || '无'}}
+            额定电流：{{deviceInfo.rated_current || '无'}}
+            CT变比：{{deviceInfo.ct_ratio || '无'}}
+            位置：{{deviceInfo.position || '无'}}
+        </pre>
     </div>
     <div id='cy'></div>
     <script src="../dist/detail.bundle.js"></script>

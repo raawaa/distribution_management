@@ -1,9 +1,9 @@
-const path = require('path')
-const { remote, ipcRenderer } = require('electron')
-const Menu = remote.Menu
-const MenuItem = remote.MenuItem
+const path = require('path');
+const { remote, ipcRenderer } = require('electron');
+const Menu = remote.Menu;
+const MenuItem = remote.MenuItem;
 
-const Vue = require('vue')
+const Vue = require('vue').default;
 
 const app = new Vue({
   el: '#app',
@@ -17,14 +17,12 @@ const app = new Vue({
     },
     getItemDetail: function (event) {
       event.preventDefault();
-      let title = event.currentTarget.dataset.devicename;
-      let detailWin = new remote.BrowserWindow({
-        title,
-        autoHideMenuBar: true
-      });
-      detailWin.loadURL(`file://${__dirname}/detail.html`)
+      let name = event.currentTarget.dataset.devicename;
+      let id = event.currentTarget.dataset.deviceid;
+      let itemData = { id, name };
+      // detailWin.loadURL(`file://${__dirname}/detail.html`)
+      ipcRenderer.send('getItemDetail', itemData);
 
-      // alert('clicked');
     }
   }
 })

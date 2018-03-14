@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const url = require('url')
+const _ = require('lodash')
+const Promise = require('bluebird')
 
 const TEST_DB_NAME = "database_test.db";
 const DB_DIRNAME = "DATA";
@@ -53,3 +55,89 @@ ipcMain.on('search', (event, arg) => {
         event.sender.send('search-result', res);
     })
 })
+
+ipcMain.on('getItemDetail', (event, arg) => {
+    // console.log(arg);
+    // knex.select().from('device_node').where({ id: arg.id }).timeout(2000)
+
+    //     .then(res => {
+    //         let detailWin = new BrowserWindow({
+    //             title: res.name
+    //         });
+    //         detailWin.loadURL(url.format({
+    //             pathname: path.join(__dirname, 'src', 'detail.html'),
+    //             protocol: "file",
+    //             slashes: true
+    //         }));
+    //         detailWin.webContents.on('did-finish-load', () => {
+    //             detailWin.webContents.send('itemDetail', res);
+    //         });
+    //     })
+
+    let detailWin = new BrowserWindow({
+        title: "detail"
+    });
+    detailWin.loadURL(url.format({
+        pathname: path.join(__dirname, 'src', 'detail.html'),
+        protocol: "file",
+        slashes: true
+    }));
+    detailWin.webContents.on('did-finish-load', () => {
+        // bfsUp(arg.id).then(res => {
+        //     console.log('res: ', res);
+        //     detailWin.webContents.send('itemDetail', res);
+        // })
+        console.log('start bfs');
+        knex.select().from('device_node').where({ id: arg.id }).timeout(2000).then((res) => {
+            bfsUp(arg.id).then((dagData) => {
+                // console.log('dataFromChannel:', data);
+                detailWin.webContents.send('itemDetail', { deviceInfo: res[0], dagData });
+            });
+        });
+    });
+});
+
+function bfsUp(startId) {
+
+    let queue = [startId];
+    let nodeIds = [startId];
+    let edges = [];
+    let nodes = [];
+
+    function doG(id) {
+        return knex.select().from('edges').where({ end: id }).timeout(2000)
+            .then(res => {
+                // console.log(res)
+                if (_.isEmpty(res)) {
+                    // console.log('no parents')
+                    return null;
+                } else {
+                    edges = _.concat(edges, res);
+                    nodeIds = _.concat(nodeIds, _.map(res, x => x.start));
+                    // console.log('nodes:', nodeIds);
+                    return Promise.map(res, edge => doG(edge.start));
+                }
+            })
+            .then(() => {
+                // console.log('end of bfs');
+                // console.log({ nodeIds, edges });
+                return { nodeIds, edges };
+            })
+            .then(() => {
+                return Promise.map(nodeIds, nodeId => {
+                    return knex.select().from('device_node').where({ id: nodeId }).timeout(2000)
+                        .then(res => {
+                            nodes.push(res[0]);
+                        });
+                });
+            })
+            .then(() => {
+                console.log(nodes,edges);
+                return { nodes, edges };
+            });
+    }
+    return doG(startId);
+};
+
+
+

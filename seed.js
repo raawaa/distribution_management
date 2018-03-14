@@ -98,21 +98,31 @@ function parseRow2(row) {
 
 // Parse 强电间数据
 const distributionPanelFiles = fs.readdirSync(path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME)).map(filename => path.join(__dirname, DATA_SOURCE_DIRNAME, DISTRIBUTION_ROOM_DIRNAME, filename));
-const distributionPanelObjs = fp.flow(
+let distributionPanelObjs = fp.flow(
     fp.map(file => xlsx.parse(file)),
     _.flatten,
     fp.map(sheetObj => sheetObj.data),
     fp.reject(_.isEmpty),                               // rm empty sheets
     fp.map(sheet => sheet.map(row => _.compact(row))),  // rm empty cells
     fp.map(sheet => _.reject(sheet, _.isEmpty)),        // rm empty rows
-    fp.map(sheet => _.take(sheet, 4)),                  // take rows containing panel info only
+    // fp.map(sheet => _.take(sheet, 4)),                  // take rows containing panel info only
     fp.map(sheet => {
         // console.debug(sheet);
         return {
-            name: sheet[0][0] || null,
-            position: sheet[1][1] || null,
-            breaker_type: sheet[3][1] || null,
-            parents: sheet[2][1] || null
+            panelInfo: {
+                name: sheet[0][0] || null,
+                position: sheet[1][1] || null,
+                breaker_type: sheet[3][1] || null,
+                parents: sheet[2][1] || null
+            },
+            panelMcbs: _.drop(sheet, 6).map(row => {
+                return {
+                    name: row[0],
+                    breaker_type: row[1],
+                    tag_name: row[2],
+                    position: sheet[0][0]
+                }
+            })
         }
     })
 )(distributionPanelFiles);
@@ -126,8 +136,8 @@ edge obj:
     end: panel name
 } */
 
-const edgeObjs = fp.flow(
-    fp.map(x => ({ start: _.split(x.parents, /\s+/), end: x.name, isBackup: null })),
+let edgeObjs = fp.flow(
+    fp.map(x => ({ start: _.split(x.panelInfo.parents, /\s{2,}/), end: x.panelInfo.name, isBackup: null })),
     fp.map(edge => {
         let res = [];
         _.forEach(edge.start, s => {
@@ -137,7 +147,7 @@ const edgeObjs = fp.flow(
     }),
     fp.flatten,
     fp.map(e => {
-        e.start = _.replace(e.start, '#站', '-');
+        e.start = e.start.replace('#站', '-').replace(/\s/, '');
         if (_.includes(e.start, '备')) {
             return {
                 start: _.replace(e.start, /[\(（]备[）)]/, ''),
@@ -154,6 +164,41 @@ const edgeObjs = fp.flow(
         } else return e;
     })
 )(distributionPanelObjs);
+
+distributionPanelObjs = distributionPanelObjs.map(val => {
+    let mcbs = [];
+    val.panelMcbs.map(v => {
+        if (_.includes(v.name, '-')) {
+            re = /\s*Q(\d+)-Q?(\d+)\s*/i;
+            let found = v.name.match(re);
+            let start = _.toNumber(found[1]);
+            let end = _.toNumber(found[2]);
+            let range = _.range(start, end + 1).map(n => {
+                let tmp = { ...v };
+                tmp.name = 'Q' + n + '@' + v.position;
+                mcbs.push(tmp);
+            })
+        } else {
+            let tmp = { ...v };
+            tmp.name = tmp.name + '@' + tmp.position;
+            mcbs.push(tmp);
+        }
+    });
+    return {
+        panelInfo: val.panelInfo,
+        panelMcbs: mcbs
+    }
+});
+
+
+edgeObjs = _.concat(edgeObjs, _.reduce(distributionPanelObjs, (res, val, key) => {
+    return _.concat(res, _.map(val.panelMcbs, x => ({
+        start: x.position,
+        end: x.name,
+        is_backup: false
+
+    })))
+}, []));
 
 
 // // seeding database
@@ -202,11 +247,17 @@ knex.schema.hasTable('device_node')
     })
     .then(() => {
         return knex.batchInsert('device_node', _.map(distributionPanelObjs, x => ({
-            name: x.name,
-            tag_name: x.name,
-            breaker_type: x.breaker_type,
-            position: x.position
+            name: x.panelInfo.name,
+            tag_name: x.panelInfo.name,
+            breaker_type: x.panelInfo.breaker_type,
+            position: x.panelInfo.position
         })), 100);
+    })
+    .then(() => {
+        return knex.batchInsert('device_node',
+            _.reduce(distributionPanelObjs, (res, val, key) => {
+                return _.concat(res, val.panelMcbs);
+            }, []), 100);
     })
     .then(() => {
         Promise.map(edgeObjs, function (e) {
@@ -234,9 +285,14 @@ knex.schema.hasTable('device_node')
                             t.string('end');
                             t.boolean('is_backup');
                         }).then(function () {
-                            return knex('edges').select();
-                            return knex.batchInsert('edges', _.compact(res), 100).catch(e => console.error(e));
-                            return knex.insert(res).into('edges').then();
+                            // return knex('edges').select();
+                            return knex.batchInsert('edges', _.compact(res), 100)
+                                .then(() => {
+                                    console.log('seeding complete!!!');
+                                    process.exit();
+                                })
+                                .catch(e => console.error(e));
+                            // return knex.insert(res).into('edges').then();
 
                         });
                 });
