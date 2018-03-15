@@ -46,7 +46,7 @@ const cy = cytoscape({
             selector: 'edge',
             style: {
                 'curve-style': 'bezier',
-                'width': 4,
+                'width': 1,
                 'target-arrow-shape': 'triangle',
                 'line-color': '#9dbaea',
                 'target-arrow-color': '#9dbaea'
@@ -129,5 +129,9 @@ ipcRenderer.on('itemDetail', (e, { deviceInfo, dagData }) => {
         if (!ele.data('is_backup'))
             ele.style('line-color', 'red');
     });
-    cy.layout({ name: "dagre" }).run()
+    cy.$('#n' + deviceInfo.id).style({
+        'border-width': 3,
+        'border-color': 'red',
+    })
+    cy.layout({ name: "dagre", nodeDimensionsIncludeLabels: true }).run();
 })
