@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js run dist
 
 PATH: 
-  C:\Users\YuWenjie\cmder_mini\bin;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5\ConEmu\Scripts;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5\ConEmu;C:\Program Files\ImageMagick-7.0.2-Q16;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files (x86)\QuickTime\QTSystem\;C:\texlive\2017\bin\win32;C:\ProgramData\chocolatey\bin;C:\cygwin64\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Users\YuWenjie\.windows-build-tools\python27\;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Users\YuWenjie\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\cygwin64\bin;C:\Users\YuWenjie\sqlite-tools-win32-x86-3220000;C:\Users\YuWenjie\AppData\Roaming\npm;C:\Users\YuWenjie\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Users\YuWenjie\cmder_mini\
+  C:\Users\YuWenjie\cmder_mini\bin;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5\ConEmu\Scripts;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5;C:\Users\YuWenjie\cmder_mini\vendor\conemu-maximus5\ConEmu;C:\Program Files\ImageMagick-7.0.2-Q16;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files (x86)\QuickTime\QTSystem\;C:\texlive\2017\bin\win32;C:\ProgramData\chocolatey\bin;C:\cygwin64\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Users\YuWenjie\.windows-build-tools\python27\;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Users\YuWenjie\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\YuWenjie\sqlite-tools-win32-x86-3220000;C:\Users\YuWenjie\AppData\Roaming\npm;C:\Users\YuWenjie\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Users\YuWenjie\cmder_mini\
 
 Yarn version: 
   1.5.1
@@ -23,7 +23,8 @@ npm manifest:
       "start": "electron .",
       "build": "webpack",
       "watch": "webpack --watch",
-      "rebuild": "electron-rebuild -d=http://npm.taobao.org/mirrors/atom-shell"
+      "rebuild": "electron-rebuild -d=http://npm.taobao.org/mirrors/atom-shell",
+      "dist": "electron-packager ."
     },
     "keywords": [],
     "author": "raawaa",
@@ -31,6 +32,7 @@ npm manifest:
     "devDependencies": {
       "css-loader": "^0.28.10",
       "electron": "1.6.5",
+      "electron-packager": "^11.1.0",
       "electron-rebuild": "^1.7.3",
       "style-loader": "^0.20.2",
       "webpack": "^4.0.1",
@@ -157,6 +159,10 @@ Lockfile:
     version "0.2.0"
     resolved "http://registry.npm.taobao.org/any-observable/download/any-observable-0.2.0.tgz#c67870058003579009083f54ac0abafb5c33d242"
   
+  any-promise@^1.0.0:
+    version "1.3.0"
+    resolved "http://registry.npm.taobao.org/any-promise/download/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
+  
   anymatch@^2.0.0:
     version "2.0.0"
     resolved "http://registry.npm.taobao.org/anymatch/download/anymatch-2.0.0.tgz#bcb24b4f37934d9aa7ac17b4adaf89e7c76ef2eb"
@@ -241,6 +247,19 @@ Lockfile:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/arrify/download/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   
+  asar@^0.14.0:
+    version "0.14.3"
+    resolved "http://registry.npm.taobao.org/asar/download/asar-0.14.3.tgz#c72a81542a48e3bca459fb1b07ee2b6adfae265d"
+    dependencies:
+      chromium-pickle-js "^0.2.0"
+      commander "^2.9.0"
+      cuint "^0.2.1"
+      glob "^6.0.4"
+      minimatch "^3.0.3"
+      mkdirp "^0.5.0"
+      mksnapshot "^0.3.0"
+      tmp "0.0.28"
+  
   asn1.js@^4.0.0:
     version "4.10.1"
     resolved "http://registry.npm.taobao.org/asn1.js/download/asn1.js-4.10.1.tgz#b9c2bf5805f1e64aadeed6df3a2bfafb5a73f5a0"
@@ -300,6 +319,10 @@ Lockfile:
   atob@^2.0.0:
     version "2.0.3"
     resolved "http://registry.npm.taobao.org/atob/download/atob-2.0.3.tgz#19c7a760473774468f20b2d2d03372ad7d4cbf5d"
+  
+  author-regex@^1.0.0:
+    version "1.0.0"
+    resolved "http://registry.npm.taobao.org/author-regex/download/author-regex-1.0.0.tgz#d08885be6b9bbf9439fe087c76287245f0a81450"
   
   autoprefixer@^6.3.1:
     version "6.7.7"
@@ -916,6 +939,10 @@ Lockfile:
     version "1.0.0"
     resolved "http://registry.npm.taobao.org/balanced-match/download/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   
+  base64-js@1.2.0:
+    version "1.2.0"
+    resolved "http://registry.npm.taobao.org/base64-js/download/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
+  
   base64-js@^1.0.2:
     version "1.2.3"
     resolved "http://registry.npm.taobao.org/base64-js/download/base64-js-1.2.3.tgz#fb13668233d9614cf5fb4bce95a9ba4096cdf801"
@@ -946,6 +973,13 @@ Lockfile:
     version "1.11.0"
     resolved "http://registry.npm.taobao.org/binary-extensions/download/binary-extensions-1.11.0.tgz#46aa1751fb6a2f93ee5e689bb1087d4b14c6c205"
   
+  binary@^0.3.0:
+    version "0.3.0"
+    resolved "http://registry.npm.taobao.org/binary/download/binary-0.3.0.tgz#9f60553bc5ce8c3386f3b553cff47462adecaa79"
+    dependencies:
+      buffers "~0.1.1"
+      chainsaw "~0.1.0"
+  
   binaryextensions@2:
     version "2.1.1"
     resolved "http://registry.npm.taobao.org/binaryextensions/download/binaryextensions-2.1.1.tgz#3209a51ca4a4ad541a3b8d3d6a6d5b83a2485935"
@@ -956,7 +990,7 @@ Lockfile:
     dependencies:
       inherits "~2.0.0"
   
-  bluebird@^3.5.1:
+  bluebird@^3.1.1, bluebird@^3.5.0, bluebird@^3.5.1:
     version "3.5.1"
     resolved "http://registry.npm.taobao.org/bluebird/download/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
   
@@ -1089,6 +1123,10 @@ Lockfile:
       ieee754 "^1.1.4"
       isarray "^1.0.0"
   
+  buffers@~0.1.1:
+    version "0.1.1"
+    resolved "http://registry.npm.taobao.org/buffers/download/buffers-0.1.1.tgz#b24579c3bed4d6d396aeee6d9a8ae7f5482ab7bb"
+  
   builtin-modules@^1.0.0:
     version "1.1.1"
     resolved "http://registry.npm.taobao.org/builtin-modules/download/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
@@ -1184,6 +1222,12 @@ Lockfile:
       commander "^2.14.1"
       printj "~1.1.2"
   
+  chainsaw@~0.1.0:
+    version "0.1.0"
+    resolved "http://registry.npm.taobao.org/chainsaw/download/chainsaw-0.1.0.tgz#5eab50b28afe58074d0d58291388828b5e5fbc98"
+    dependencies:
+      traverse ">=0.3.0 <0.4"
+  
   chalk@2.3.0:
     version "2.3.0"
     resolved "http://registry.npm.taobao.org/chalk/download/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
@@ -1247,6 +1291,10 @@ Lockfile:
   chrome-trace-event@^0.1.1:
     version "0.1.2"
     resolved "http://registry.npm.taobao.org/chrome-trace-event/download/chrome-trace-event-0.1.2.tgz#90f36885d5345a50621332f0717b595883d5d982"
+  
+  chromium-pickle-js@^0.2.0:
+    version "0.2.0"
+    resolved "http://registry.npm.taobao.org/chromium-pickle-js/download/chromium-pickle-js-0.2.0.tgz#04a106672c18b085ab774d983dfa3ea138f22205"
   
   cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     version "1.0.4"
@@ -1435,6 +1483,10 @@ Lockfile:
     version "2.14.1"
     resolved "http://registry.npm.taobao.org/commander/download/commander-2.14.1.tgz#2235123e37af8ca3c65df45b026dbd357b01b9aa"
   
+  commander@^2.9.0:
+    version "2.15.0"
+    resolved "http://registry.npm.taobao.org/commander/download/commander-2.15.0.tgz#ad2a23a1c3b036e392469b8012cec6b33b4c1322"
+  
   commander@~2.13.0:
     version "2.13.0"
     resolved "http://registry.npm.taobao.org/commander/download/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
@@ -1442,6 +1494,10 @@ Lockfile:
   commondir@^1.0.1:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/commondir/download/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
+  
+  compare-version@^0.1.2:
+    version "0.1.2"
+    resolved "http://registry.npm.taobao.org/compare-version/download/compare-version-0.1.2.tgz#0162ec2d9351f5ddd59a9202cba935366a725080"
   
   component-emitter@^1.2.1:
     version "1.2.1"
@@ -1667,6 +1723,10 @@ Lockfile:
       clap "^1.0.9"
       source-map "^0.5.3"
   
+  cuint@^0.2.1:
+    version "0.2.2"
+    resolved "http://registry.npm.taobao.org/cuint/download/cuint-0.2.2.tgz#408086d409550c2631155619e9fa7bcadc3b991b"
+  
   currently-unhandled@^0.4.1:
     version "0.4.1"
     resolved "http://registry.npm.taobao.org/currently-unhandled/download/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -1725,7 +1785,7 @@ Lockfile:
     dependencies:
       ms "2.0.0"
   
-  debug@3.1.0, debug@^3.1.0:
+  debug@3.1.0, debug@^3.0.0, debug@^3.1.0:
     version "3.1.0"
     resolved "http://registry.npm.taobao.org/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
     dependencies:
@@ -1744,6 +1804,18 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/decompress-response/download/decompress-response-3.3.0.tgz#80a4dd323748384bfa248083622aedec982adff3"
     dependencies:
       mimic-response "^1.0.0"
+  
+  decompress-zip@0.3.0:
+    version "0.3.0"
+    resolved "http://registry.npm.taobao.org/decompress-zip/download/decompress-zip-0.3.0.tgz#ae3bcb7e34c65879adfe77e19c30f86602b4bdb0"
+    dependencies:
+      binary "^0.3.0"
+      graceful-fs "^4.1.3"
+      mkpath "^0.1.0"
+      nopt "^3.0.1"
+      q "^1.1.2"
+      readable-stream "^1.1.8"
+      touch "0.0.3"
   
   deep-extend@^0.4.0, deep-extend@~0.4.0:
     version "0.4.2"
@@ -1870,6 +1942,54 @@ Lockfile:
       semver "^5.3.0"
       sumchecker "^1.2.0"
   
+  electron-download@^4.0.0:
+    version "4.1.0"
+    resolved "http://registry.npm.taobao.org/electron-download/download/electron-download-4.1.0.tgz#bf932c746f2f87ffcc09d1dd472f2ff6b9187845"
+    dependencies:
+      debug "^2.2.0"
+      env-paths "^1.0.0"
+      fs-extra "^2.0.0"
+      minimist "^1.2.0"
+      nugget "^2.0.0"
+      path-exists "^3.0.0"
+      rc "^1.1.2"
+      semver "^5.3.0"
+      sumchecker "^2.0.1"
+  
+  electron-osx-sign@^0.4.1:
+    version "0.4.10"
+    resolved "http://registry.npm.taobao.org/electron-osx-sign/download/electron-osx-sign-0.4.10.tgz#be4f3b89b2a75a1dc5f1e7249081ab2929ca3a26"
+    dependencies:
+      bluebird "^3.5.0"
+      compare-version "^0.1.2"
+      debug "^2.6.8"
+      isbinaryfile "^3.0.2"
+      minimist "^1.2.0"
+      plist "^2.1.0"
+  
+  electron-packager@^11.1.0:
+    version "11.1.0"
+    resolved "http://registry.npm.taobao.org/electron-packager/download/electron-packager-11.1.0.tgz#90b5b41c952ccfc86f0bcb3a9c3fd30151978958"
+    dependencies:
+      asar "^0.14.0"
+      debug "^3.0.0"
+      electron-download "^4.0.0"
+      electron-osx-sign "^0.4.1"
+      extract-zip "^1.0.3"
+      fs-extra "^5.0.0"
+      get-package-info "^1.0.0"
+      mz "^2.6.0"
+      nodeify "^1.0.1"
+      parse-author "^2.0.0"
+      pify "^3.0.0"
+      plist "^2.0.0"
+      pruner "^0.0.7"
+      rcedit "^1.0.0"
+      resolve "^1.1.6"
+      sanitize-filename "^1.6.0"
+      semver "^5.3.0"
+      yargs-parser "^9.0.2"
+  
   electron-rebuild@^1.7.3:
     version "1.7.3"
     resolved "http://registry.npm.taobao.org/electron-rebuild/download/electron-rebuild-1.7.3.tgz#24ae06ad9dd61cb7e4d688961f49118c40a110eb"
@@ -1929,6 +2049,10 @@ Lockfile:
       graceful-fs "^4.1.2"
       memory-fs "^0.4.0"
       tapable "^1.0.0"
+  
+  env-paths@^1.0.0:
+    version "1.0.0"
+    resolved "http://registry.npm.taobao.org/env-paths/download/env-paths-1.0.0.tgz#4168133b42bb05c38a35b1ae4397c8298ab369e0"
   
   errno@^0.1.3, errno@~0.1.7:
     version "0.1.7"
@@ -2288,6 +2412,16 @@ Lockfile:
       inherits "^2.0.1"
       readable-stream "^2.0.0"
   
+  fs-extra@0.26.7:
+    version "0.26.7"
+    resolved "http://registry.npm.taobao.org/fs-extra/download/fs-extra-0.26.7.tgz#9ae1fdd94897798edab76d0918cf42d0c3184fa9"
+    dependencies:
+      graceful-fs "^4.1.2"
+      jsonfile "^2.1.0"
+      klaw "^1.0.0"
+      path-is-absolute "^1.0.0"
+      rimraf "^2.2.8"
+  
   fs-extra@^0.30.0:
     version "0.30.0"
     resolved "http://registry.npm.taobao.org/fs-extra/download/fs-extra-0.30.0.tgz#f233ffcc08d4da7d432daa449776989db1df93f0"
@@ -2298,12 +2432,35 @@ Lockfile:
       path-is-absolute "^1.0.0"
       rimraf "^2.2.8"
   
+  fs-extra@^2.0.0:
+    version "2.1.2"
+    resolved "http://registry.npm.taobao.org/fs-extra/download/fs-extra-2.1.2.tgz#046c70163cef9aad46b0e4a7fa467fb22d71de35"
+    dependencies:
+      graceful-fs "^4.1.2"
+      jsonfile "^2.1.0"
+  
   fs-extra@^3.0.1:
     version "3.0.1"
     resolved "http://registry.npm.taobao.org/fs-extra/download/fs-extra-3.0.1.tgz#3794f378c58b342ea7dbbb23095109c4b3b62291"
     dependencies:
       graceful-fs "^4.1.2"
       jsonfile "^3.0.0"
+      universalify "^0.1.0"
+  
+  fs-extra@^4.0.0:
+    version "4.0.3"
+    resolved "http://registry.npm.taobao.org/fs-extra/download/fs-extra-4.0.3.tgz#0d852122e5bc5beb453fb028e9c0c9bf36340c94"
+    dependencies:
+      graceful-fs "^4.1.2"
+      jsonfile "^4.0.0"
+      universalify "^0.1.0"
+  
+  fs-extra@^5.0.0:
+    version "5.0.0"
+    resolved "http://registry.npm.taobao.org/fs-extra/download/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
+    dependencies:
+      graceful-fs "^4.1.2"
+      jsonfile "^4.0.0"
       universalify "^0.1.0"
   
   fs-write-stream-atomic@^1.0.8:
@@ -2364,6 +2521,15 @@ Lockfile:
     version "1.0.2"
     resolved "http://registry.npm.taobao.org/get-caller-file/download/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
   
+  get-package-info@^1.0.0:
+    version "1.0.0"
+    resolved "http://registry.npm.taobao.org/get-package-info/download/get-package-info-1.0.0.tgz#6432796563e28113cd9474dbbd00052985a4999c"
+    dependencies:
+      bluebird "^3.1.1"
+      debug "^2.2.0"
+      lodash.get "^4.0.0"
+      read-pkg-up "^2.0.0"
+  
   get-stdin@^4.0.1:
     version "4.0.1"
     resolved "http://registry.npm.taobao.org/get-stdin/download/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
@@ -2422,7 +2588,7 @@ Lockfile:
       is-glob "^3.1.0"
       path-dirname "^1.0.0"
   
-  glob@^6.0.1:
+  glob@^6.0.1, glob@^6.0.4:
     version "6.0.4"
     resolved "http://registry.npm.taobao.org/glob/download/glob-6.0.4.tgz#0f08860f6a155127b2fadd4f9ce24b1aab6e4d22"
     dependencies:
@@ -2534,7 +2700,7 @@ Lockfile:
       url-parse-lax "^3.0.0"
       url-to-options "^1.0.1"
   
-  graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
+  graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
     version "4.1.11"
     resolved "http://registry.npm.taobao.org/graceful-fs/download/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
   
@@ -3075,6 +3241,10 @@ Lockfile:
     version "2.1.0"
     resolved "http://registry.npm.taobao.org/is-promise/download/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
   
+  is-promise@~1, is-promise@~1.0.0:
+    version "1.0.1"
+    resolved "http://registry.npm.taobao.org/is-promise/download/is-promise-1.0.1.tgz#31573761c057e33c2e91aab9e96da08cefbe76e5"
+  
   is-relative@^1.0.0:
     version "1.0.0"
     resolved "http://registry.npm.taobao.org/is-relative/download/is-relative-1.0.0.tgz#a1bb6935ce8c5dba1e8b9754b9b2dcc020e2260d"
@@ -3126,6 +3296,10 @@ Lockfile:
   isarray@1.0.0, isarray@^1.0.0, isarray@~1.0.0:
     version "1.0.0"
     resolved "http://registry.npm.taobao.org/isarray/download/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
+  
+  isbinaryfile@^3.0.2:
+    version "3.0.2"
+    resolved "http://registry.npm.taobao.org/isbinaryfile/download/isbinaryfile-3.0.2.tgz#4a3e974ec0cba9004d3fc6cde7209ea69368a621"
   
   isexe@^2.0.0:
     version "2.0.0"
@@ -3242,6 +3416,12 @@ Lockfile:
   jsonfile@^3.0.0:
     version "3.0.1"
     resolved "http://registry.npm.taobao.org/jsonfile/download/jsonfile-3.0.1.tgz#a5ecc6f65f53f662c4415c7675a0331d0992ec66"
+    optionalDependencies:
+      graceful-fs "^4.1.6"
+  
+  jsonfile@^4.0.0:
+    version "4.0.0"
+    resolved "http://registry.npm.taobao.org/jsonfile/download/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
     optionalDependencies:
       graceful-fs "^4.1.6"
   
@@ -3435,6 +3615,10 @@ Lockfile:
   lodash.debounce@^4.0.8:
     version "4.0.8"
     resolved "http://registry.npm.taobao.org/lodash.debounce/download/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  
+  lodash.get@^4.0.0:
+    version "4.4.2"
+    resolved "http://registry.npm.taobao.org/lodash.get/download/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   
   lodash.memoize@^4.1.2:
     version "4.1.2"
@@ -3662,7 +3846,7 @@ Lockfile:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/minimalistic-crypto-utils/download/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   
-  "minimatch@2 || 3", minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.4:
+  "minimatch@2 || 3", minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4:
     version "3.0.4"
     resolved "http://registry.npm.taobao.org/minimatch/download/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
     dependencies:
@@ -3714,6 +3898,18 @@ Lockfile:
     dependencies:
       minimist "0.0.8"
   
+  mkpath@^0.1.0:
+    version "0.1.0"
+    resolved "http://registry.npm.taobao.org/mkpath/download/mkpath-0.1.0.tgz#7554a6f8d871834cc97b5462b122c4c124d6de91"
+  
+  mksnapshot@^0.3.0:
+    version "0.3.1"
+    resolved "http://registry.npm.taobao.org/mksnapshot/download/mksnapshot-0.3.1.tgz#2501c05657436d742ce958a4ff92c77e40dd37e6"
+    dependencies:
+      decompress-zip "0.3.0"
+      fs-extra "0.26.7"
+      request "^2.79.0"
+  
   move-concurrently@^1.0.1:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/move-concurrently/download/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -3745,6 +3941,14 @@ Lockfile:
   mute-stream@0.0.7:
     version "0.0.7"
     resolved "http://registry.npm.taobao.org/mute-stream/download/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
+  
+  mz@^2.6.0:
+    version "2.7.0"
+    resolved "http://registry.npm.taobao.org/mz/download/mz-2.7.0.tgz#95008057a56cafadc2bc63dde7f9ff6955948e32"
+    dependencies:
+      any-promise "^1.0.0"
+      object-assign "^4.0.1"
+      thenify-all "^1.0.0"
   
   nan@^2.3.0:
     version "2.9.2"
@@ -3857,6 +4061,13 @@ Lockfile:
     dependencies:
       xlsx "^0.11.10"
   
+  nodeify@^1.0.1:
+    version "1.0.1"
+    resolved "http://registry.npm.taobao.org/nodeify/download/nodeify-1.0.1.tgz#64ab69a7bdbaf03ce107b4f0335c87c0b9e91b1d"
+    dependencies:
+      is-promise "~1.0.0"
+      promise "~1.3.0"
+  
   nomnom@^1.8.1:
     version "1.8.1"
     resolved "http://registry.npm.taobao.org/nomnom/download/nomnom-1.8.1.tgz#2151f722472ba79e50a76fc125bb8c8f2e4dc2a7"
@@ -3864,7 +4075,7 @@ Lockfile:
       chalk "~0.4.0"
       underscore "~1.6.0"
   
-  "nopt@2 || 3":
+  "nopt@2 || 3", nopt@^3.0.1:
     version "3.0.6"
     resolved "http://registry.npm.taobao.org/nopt/download/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
     dependencies:
@@ -3876,6 +4087,12 @@ Lockfile:
     dependencies:
       abbrev "1"
       osenv "^0.1.4"
+  
+  nopt@~1.0.10:
+    version "1.0.10"
+    resolved "http://registry.npm.taobao.org/nopt/download/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
+    dependencies:
+      abbrev "1"
   
   normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
     version "2.4.0"
@@ -4154,6 +4371,12 @@ Lockfile:
       evp_bytestokey "^1.0.0"
       pbkdf2 "^3.0.3"
   
+  parse-author@^2.0.0:
+    version "2.0.0"
+    resolved "http://registry.npm.taobao.org/parse-author/download/parse-author-2.0.0.tgz#d3460bf1ddd0dfaeed42da754242e65fb684a81f"
+    dependencies:
+      author-regex "^1.0.0"
+  
   parse-filepath@^1.0.1:
     version "1.0.2"
     resolved "http://registry.npm.taobao.org/parse-filepath/download/parse-filepath-1.0.2.tgz#a632127f53aaf3d15876f5872f3ffac763d6c891"
@@ -4288,6 +4511,14 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/pkg-dir/download/pkg-dir-2.0.0.tgz#f6d5d1109e19d63edf428e0bd57e12777615334b"
     dependencies:
       find-up "^2.1.0"
+  
+  plist@^2.0.0, plist@^2.1.0:
+    version "2.1.0"
+    resolved "http://registry.npm.taobao.org/plist/download/plist-2.1.0.tgz#57ccdb7a0821df21831217a3cad54e3e146a1025"
+    dependencies:
+      base64-js "1.2.0"
+      xmlbuilder "8.2.2"
+      xmldom "0.1.x"
   
   posix-character-classes@^0.1.0:
     version "0.1.1"
@@ -4601,9 +4832,21 @@ Lockfile:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/promise-inflight/download/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   
+  promise@~1.3.0:
+    version "1.3.0"
+    resolved "http://registry.npm.taobao.org/promise/download/promise-1.3.0.tgz#e5cc9a4c8278e4664ffedc01c7da84842b040175"
+    dependencies:
+      is-promise "~1"
+  
   prr@~1.0.1:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/prr/download/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
+  
+  pruner@^0.0.7:
+    version "0.0.7"
+    resolved "http://registry.npm.taobao.org/pruner/download/pruner-0.0.7.tgz#345fbcb3e80701163a1d7adf56bac229a5a1e4c1"
+    dependencies:
+      fs-extra "^4.0.0"
   
   pseudomap@^1.0.2:
     version "1.0.2"
@@ -4715,6 +4958,10 @@ Lockfile:
       minimist "^1.2.0"
       strip-json-comments "~2.0.1"
   
+  rcedit@^1.0.0:
+    version "1.0.0"
+    resolved "http://registry.npm.taobao.org/rcedit/download/rcedit-1.0.0.tgz#43309ecbc8814f3582fca6b751748cfad66a16a2"
+  
   read-chunk@^2.0.0:
     version "2.1.0"
     resolved "http://registry.npm.taobao.org/read-chunk/download/read-chunk-2.1.0.tgz#6a04c0928005ed9d42e1a6ac5600e19cbc7ff655"
@@ -4776,7 +5023,7 @@ Lockfile:
       string_decoder "~1.0.3"
       util-deprecate "~1.0.1"
   
-  readable-stream@~1.1.9:
+  readable-stream@^1.1.8, readable-stream@~1.1.9:
     version "1.1.14"
     resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
     dependencies:
@@ -4975,7 +5222,7 @@ Lockfile:
       tunnel-agent "^0.6.0"
       uuid "^3.0.0"
   
-  request@^2.45.0:
+  request@^2.45.0, request@^2.79.0:
     version "2.85.0"
     resolved "http://registry.npm.taobao.org/request/download/request-2.85.0.tgz#5a03615a47c61420b3eb99b7dba204f83603e1fa"
     dependencies:
@@ -5119,6 +5366,12 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/safe-regex/download/safe-regex-1.1.0.tgz#40a3669f3b077d1e943d44629e157dd48023bf2e"
     dependencies:
       ret "~0.1.10"
+  
+  sanitize-filename@^1.6.0:
+    version "1.6.1"
+    resolved "http://registry.npm.taobao.org/sanitize-filename/download/sanitize-filename-1.6.1.tgz#612da1c96473fa02dccda92dcd5b4ab164a6772a"
+    dependencies:
+      truncate-utf8-bytes "^1.0.0"
   
   sax@~1.2.1:
     version "1.2.4"
@@ -5536,6 +5789,12 @@ Lockfile:
       debug "^2.2.0"
       es6-promise "^4.0.5"
   
+  sumchecker@^2.0.1:
+    version "2.0.2"
+    resolved "http://registry.npm.taobao.org/sumchecker/download/sumchecker-2.0.2.tgz#0f42c10e5d05da5d42eea3e56c3399a37d6c5b3e"
+    dependencies:
+      debug "^2.2.0"
+  
   supports-color@^2.0.0:
     version "2.0.0"
     resolved "http://registry.npm.taobao.org/supports-color/download/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
@@ -5622,6 +5881,18 @@ Lockfile:
     version "2.2.0"
     resolved "http://registry.npm.taobao.org/textextensions/download/textextensions-2.2.0.tgz#38ac676151285b658654581987a0ce1a4490d286"
   
+  thenify-all@^1.0.0:
+    version "1.6.0"
+    resolved "http://registry.npm.taobao.org/thenify-all/download/thenify-all-1.6.0.tgz#1a1918d402d8fc3f98fbf234db0bcc8cc10e9726"
+    dependencies:
+      thenify ">= 3.1.0 < 4"
+  
+  "thenify@>= 3.1.0 < 4":
+    version "3.3.0"
+    resolved "http://registry.npm.taobao.org/thenify/download/thenify-3.3.0.tgz#e69e38a1babe969b0108207978b9f62b88604839"
+    dependencies:
+      any-promise "^1.0.0"
+  
   throttleit@0.0.2:
     version "0.0.2"
     resolved "http://registry.npm.taobao.org/throttleit/download/throttleit-0.0.2.tgz#cfedf88e60c00dd9697b61fdd2a8343a9b680eaf"
@@ -5659,6 +5930,12 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/timers-browserify/download/timers-browserify-2.0.6.tgz#241e76927d9ca05f4d959819022f5b3664b64bae"
     dependencies:
       setimmediate "^1.0.4"
+  
+  tmp@0.0.28:
+    version "0.0.28"
+    resolved "http://registry.npm.taobao.org/tmp/download/tmp-0.0.28.tgz#172735b7f614ea7af39664fa84cf0de4e515d120"
+    dependencies:
+      os-tmpdir "~1.0.1"
   
   tmp@^0.0.29:
     version "0.0.29"
@@ -5702,11 +5979,21 @@ Lockfile:
       regex-not "^1.0.2"
       safe-regex "^1.1.0"
   
+  touch@0.0.3:
+    version "0.0.3"
+    resolved "http://registry.npm.taobao.org/touch/download/touch-0.0.3.tgz#51aef3d449571d4f287a5d87c9c8b49181a0db1d"
+    dependencies:
+      nopt "~1.0.10"
+  
   tough-cookie@~2.3.0, tough-cookie@~2.3.3:
     version "2.3.4"
     resolved "http://registry.npm.taobao.org/tough-cookie/download/tough-cookie-2.3.4.tgz#ec60cee38ac675063ffc97a5c18970578ee83655"
     dependencies:
       punycode "^1.4.1"
+  
+  "traverse@>=0.3.0 <0.4":
+    version "0.3.9"
+    resolved "http://registry.npm.taobao.org/traverse/download/traverse-0.3.9.tgz#717b8f220cc0bb7b44e40514c22b2e8bbc70d8b9"
   
   trim-newlines@^1.0.0:
     version "1.0.0"
@@ -5715,6 +6002,12 @@ Lockfile:
   trim-right@^1.0.1:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/trim-right/download/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
+  
+  truncate-utf8-bytes@^1.0.0:
+    version "1.0.2"
+    resolved "http://registry.npm.taobao.org/truncate-utf8-bytes/download/truncate-utf8-bytes-1.0.2.tgz#405923909592d56f78a5818434b0b78489ca5f2b"
+    dependencies:
+      utf8-byte-length "^1.0.1"
   
   tty-browserify@0.0.0:
     version "0.0.0"
@@ -5864,6 +6157,10 @@ Lockfile:
       define-property "^0.2.5"
       isobject "^3.0.0"
       lazy-cache "^2.0.2"
+  
+  utf8-byte-length@^1.0.1:
+    version "1.0.4"
+    resolved "http://registry.npm.taobao.org/utf8-byte-length/download/utf8-byte-length-1.0.4.tgz#f45f150c4c66eee968186505ab93fcbb8ad6bf61"
   
   util-deprecate@~1.0.1:
     version "1.0.2"
@@ -6089,6 +6386,14 @@ Lockfile:
       exit-on-epipe "~1.0.1"
       ssf "~0.10.1"
   
+  xmlbuilder@8.2.2:
+    version "8.2.2"
+    resolved "http://registry.npm.taobao.org/xmlbuilder/download/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
+  
+  xmldom@0.1.x:
+    version "0.1.27"
+    resolved "http://registry.npm.taobao.org/xmldom/download/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
+  
   xtend@^4.0.0, xtend@~4.0.0, xtend@~4.0.1:
     version "4.0.1"
     resolved "http://registry.npm.taobao.org/xtend/download/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
@@ -6120,6 +6425,12 @@ Lockfile:
   yargs-parser@^7.0.0:
     version "7.0.0"
     resolved "http://registry.npm.taobao.org/yargs-parser/download/yargs-parser-7.0.0.tgz#8d0ac42f16ea55debd332caf4c4038b3e3f5dfd9"
+    dependencies:
+      camelcase "^4.1.0"
+  
+  yargs-parser@^9.0.2:
+    version "9.0.2"
+    resolved "http://registry.npm.taobao.org/yargs-parser/download/yargs-parser-9.0.2.tgz#9ccf6a43460fe4ed40a9bb68f48d43b8a68cc077"
     dependencies:
       camelcase "^4.1.0"
   
@@ -6237,17 +6548,13 @@ Lockfile:
       yeoman-environment "^1.1.0"
 
 Trace: 
-  Error: F:\Code\distribution_management\node_modules\electron: Command failed.
+  Error: Command failed.
   Exit code: 1
   Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c node install.js
-  Directory: F:\Code\distribution_management\node_modules\electron
+  Arguments: /d /s /c electron-packager .
+  Directory: F:\Code\distribution_management
   Output:
-  F:\Code\distribution_management\node_modules\electron\install.js:47
-    throw err
-    ^
   
-  Error: EPERM: operation not permitted, unlink 'C:\Users\YuWenjie\.electron\electron-v1.6.5-win32-x64.zip'
       at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
       at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
       at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)

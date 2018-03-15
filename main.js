@@ -9,10 +9,14 @@ const DB_DIRNAME = "DATA";
 const DATA_SOURCE_DIRNAME = "data_source";
 const STATION_DIRNAME = "station";
 const DISTRIBUTION_ROOM_DIRNAME = "distribution_room";
+
+console.log(app.getPath('userData'));
+
 const knex = require('knex')({
     client: 'sqlite3',
     connection: {
         filename: path.join(__dirname, DB_DIRNAME, TEST_DB_NAME)
+        // filename:path.join(app.getPath('userData'),TEST_DB_NAME)
     },
     useNullAsDefault: true
 });
@@ -24,8 +28,12 @@ const createWindow = () => {
         height: 300,
         minWidth: 500,
         minHeight: 200,
-        acceptFirstMouse: true
+        acceptFirstMouse: true,
+        webPreferences:{
+            devTools:true
+        }
     });
+    win.webContents.openDevTools();
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'src', 'index.html'),
         protocol: 'file',
